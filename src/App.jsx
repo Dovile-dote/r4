@@ -1,12 +1,12 @@
 import './App.css';
-import { useReducer, useState } from 'react';
+import { useEffect, useReducer, useState, useRef } from 'react';
 import numbersReducer from './Reducer/numbersReducer';
 
 function App() {
   const [numbers, dispachNumbers] = useReducer(numbersReducer, []);
   const [numberInput, setNumberInput] = useState('');
-  const [rangeInput, setRangeInput] = useState(9999);
-  // const rangeInput = useState(9999);
+  const [rangeInput, setRangeInput] = useState('0');
+  const doRange = useRef(true);
 
   const addNr = () => {
     const action = {
@@ -68,20 +68,35 @@ function App() {
 
   const removeThis = () => {
     const action = {
-      type: 'remove_this',
+      // type: 'remove_this',
+      type: 'rem',
       payload: numberInput,
     };
+    setNumberInput('');
     dispachNumbers(action);
   };
 
-  const filtracija = () => {
+  // const filtracija = () => {
+  //   const action = {
+  //     type: 'filtracija',
+  //     payload: rangeInput,
+  //   };
+  //   dispachNumbers(action);
+  // };
+
+  useEffect(() => {
+    if (!doRange.current) {
+      return;
+    }
+    doRange.current = false;
+    setTimeout(() => (doRange.current = true), 50);
+
     const action = {
       type: 'filtracija',
-      payload: rangeInput,
+      payload: rangeInput.padStart(4, 0),
     };
     dispachNumbers(action);
-    console.log(rangeInput);
-  };
+  }, [rangeInput]);
 
   return (
     <div className="App">
@@ -122,9 +137,9 @@ function App() {
           />
           <button onClick={removeThis}>remove this</button>
         </div>
-        <h2>kaip padaryti gyva filtracija ???</h2>
+
         <div className="flex">
-          <p>0</p>
+          <h2>{rangeInput.padStart(4, 0)}</h2>
           <input
             type="range"
             min="0"
@@ -133,8 +148,7 @@ function App() {
             onChange={(e) => setRangeInput(e.target.value)}
             // onChange={(e) => filtracija(e.target.value)}
           />
-          <p>9999</p>
-          <button onClick={filtracija}>negyva filtracija</button>
+          {/* <button onClick={filtracija}>negyva filtracija</button> */}
         </div>
       </header>
     </div>

@@ -46,7 +46,7 @@ function numbersReducer(state, action) {
 
     case 'maziau':
       newState = state.map((o) =>
-        o.number < 5000 ? { ...o, show: true } : { ...o, show: false }
+        o.number < 4000 ? { ...o, show: true } : { ...o, show: false }
       );
       break;
 
@@ -56,23 +56,19 @@ function numbersReducer(state, action) {
 
     case 'rem':
       newState = state.map((o) =>
-        o.number !== action.payload
-          ? { ...o, show: true }
-          : { ...o, show: false }
+        o.number !== action.payload ? { ...o } : { ...o, show: false }
       );
       break;
 
     case 'remove_this':
       newState = state.map((o) =>
-        o.number !== action.payload
-          ? { ...o, show: true }
-          : { ...o, show: false }
+        o.number !== action.payload ? { ...o } : { ...o, show: false }
       );
       break;
 
     case 'filtracija':
       newState = state.map((o) =>
-        o.number < action.payload ? { ...o, show: true } : { ...o, show: false }
+        o.number > action.payload ? { ...o, show: true } : { ...o, show: false }
       );
       break;
 
