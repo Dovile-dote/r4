@@ -1,150 +1,140 @@
 import './App.css';
 import { useReducer, useState } from 'react';
-import colorReducer from './Reducers/colorReducer';
-import numberReducer from './Reducers/numberReducer';
-import textReducer from './Reducers/textReducer';
-import kvReducer from './Reducers/kvReducer';
-import rand from './Functions/rand';
+import numbersReducer from './Reducer/numbersReducer';
 
 function App() {
-  //   const [color, setColor] = useState('yellow');
-  const [color, dispachColor] = useReducer(colorReducer, 'yellow');
-  const [numb, dispachNumb] = useReducer(numberReducer, '0000');
-  //   const [colorBg, setColor] = useState('');
-  const [colorInput, setColorInput] = useState('#F8dd00');
-  const [textInput, setTextInput] = useState('');
-  const [text, dispachText] = useReducer(textReducer, 'Textas');
-  const [kv, dispachKv] = useReducer(kvReducer, []);
+  const [numbers, dispachNumbers] = useReducer(numbersReducer, []);
+  const [numberInput, setNumberInput] = useState('');
+  const [rangeInput, setRangeInput] = useState(9999);
+  // const rangeInput = useState(9999);
 
-  //   const goPink = () => {
-  //     setColor('pink');
-  //   };
-
-  const goPink = () => {
+  const addNr = () => {
     const action = {
-      type: 'go_pink',
+      type: 'add_nr',
     };
-    dispachColor(action);
+    dispachNumbers(action);
   };
 
-  const goYellow = () => {
+  const rusiuoti = () => {
     const action = {
-      type: 'go_y',
+      type: 'rusiavimas',
     };
-    dispachColor(action);
+    dispachNumbers(action);
   };
 
-  const goCange = () => {
+  const atrusiuoti = () => {
     const action = {
-      type: 'change-color',
+      type: 'atrusiavimas',
     };
-    dispachColor(action);
+    dispachNumbers(action);
   };
 
-  //   const changeColorBg = () => {
-  //     const action = {
-  //       type: 'change-bg',
-  //     };
-  //     dispachColor(action);
-  //   };
-
-  const number1 = () => {
+  const daugiau5000 = () => {
     const action = {
-      type: 'do1',
+      type: 'daugiau',
     };
-    dispachNumb(action);
+    dispachNumbers(action);
   };
 
-  const number2 = () => {
+  const maziau4000 = () => {
     const action = {
-      type: 'do2',
-      payload: rand(0, 100),
+      type: 'maziau',
     };
-    dispachNumb(action);
+    dispachNumbers(action);
   };
 
-  const goChangeTo = () => {
+  const reset = () => {
     const action = {
-      type: 'change_color_to',
-      payload: colorInput,
+      type: 'reset',
     };
-    dispachColor(action);
+    dispachNumbers(action);
   };
 
-  const changeText = () => {
+  const addBlack = () => {
     const action = {
-      type: 'change_text',
-      payload: textInput,
+      type: 'add_bl',
     };
-    dispachText(action);
+    dispachNumbers(action);
   };
-  //   useEffect = () => {
-  //       setInterval(() => dipachColor({type: 'change_color'}), 3000)
-  //   }
 
-  const addKv = () => {
+  const removeOne = (nr) => {
     const action = {
-      type: 'add_kv',
-      //   payload: textInput,
+      type: 'rem',
+      payload: nr,
     };
-    dispachKv(action);
+    dispachNumbers(action);
+    console.log(nr);
+  };
+
+  const removeThis = () => {
+    const action = {
+      type: 'remove_this',
+      payload: numberInput,
+    };
+    dispachNumbers(action);
+  };
+
+  const filtracija = () => {
+    const action = {
+      type: 'filtracija',
+      payload: rangeInput,
+    };
+    dispachNumbers(action);
+    console.log(rangeInput);
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <h1 style={{ backgroundColor: color }}>
-          Welcome to Reducer
-          <span> {numb} </span>
-        </h1>
+        <h1>REDUCER</h1>
+        <div className="flex">
+          <button onClick={addNr}>ADD</button>
+          <button onClick={rusiuoti}>rusiuoti</button>
+          <button onClick={atrusiuoti}>atrusiuot</button>
+        </div>
 
-        <div>
-          <button onClick={goPink}>Go Pink</button>
-          <button onClick={goYellow}>Go Yellow</button>
-          <button onClick={goCange}>Go change</button>
-          <div>
-            <button onClick={number1}>New Number iki 1000</button>
-            <button onClick={number2}>New Number iki 100</button>
-          </div>
-          <div>
-            {/* <input type="color" onChange={(e) => setColor(e.target.value)} /> */}
-            <input
-              type="color"
-              value={colorInput}
-              onChange={(e) => setColorInput(e.target.value)}
-            />
-            {/* <button
-              onClick={changeColorBg}
-              //   style={{ backgroundColor: colorBg }}
-            >
-              CHANGE BG
-            </button> */}
-            <button
-              onClick={goChangeTo}
-              //   style={{ backgroundColor: colorBg }}
-            >
-              CHANGE BG
-            </button>
-          </div>
-          <div>
-            <h2>{text}</h2>
-            <input
-              type="text"
-              value={textInput}
-              onChange={(e) => setTextInput(e.target.value)}
-            />
-
-            <button onClick={changeText}>Change Text</button>
-          </div>
-          <div>
-            <h2>{text}</h2>
-            <div className="flex">
-              {kv.map((_, i) => (
-                <div className="kvadratukas" key={i}></div>
-              ))}
-            </div>
-            <button onClick={addKv}>Add</button>
-          </div>
+        <div className="flex">
+          {numbers.map((o, i) =>
+            o.show ? (
+              <div
+                key={i}
+                onClick={() => removeOne(o.number)}
+                className="kv"
+                style={{ backgroundColor: o.color }}
+              >
+                {o.number}
+              </div>
+            ) : null
+          )}
+        </div>
+        <div className="flex">
+          <button onClick={daugiau5000}>brangus</button>
+          <button onClick={maziau4000}>pigus</button>
+          <button onClick={reset}>visi</button>
+          <button onClick={addBlack}>add black</button>
+        </div>
+        <div className="flex">
+          <input
+            type="number"
+            value={numberInput}
+            onChange={(e) => setNumberInput(e.target.value)}
+            placeholder="add number"
+          />
+          <button onClick={removeThis}>remove this</button>
+        </div>
+        <h2>kaip padaryti gyva filtracija ???</h2>
+        <div className="flex">
+          <p>0</p>
+          <input
+            type="range"
+            min="0"
+            max="9999"
+            value={rangeInput}
+            onChange={(e) => setRangeInput(e.target.value)}
+            // onChange={(e) => filtracija(e.target.value)}
+          />
+          <p>9999</p>
+          <button onClick={filtracija}>negyva filtracija</button>
         </div>
       </header>
     </div>
