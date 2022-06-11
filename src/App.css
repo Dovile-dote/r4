@@ -117,3 +117,10 @@ input {
   /* box-shadow: 0 0 20px #61dafb; */
   border: none;
 }
+
+.column {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
