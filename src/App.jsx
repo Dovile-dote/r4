@@ -5,11 +5,17 @@ import booksReducer from './Reducer/booksReducer';
 
 function App() {
   //   const [books, setBooks] = useState([]);
-  const [books, setBooks] = useReducer(booksReducer, []);
+  const [books, dispachBooks] = useReducer(booksReducer, []);
+
+  // useEffect(() => {
+  //   axios.get('http://in3.dev/knygos/').then((res) => {
+  //     setBooks(res.data);
+  //   });
+  // }, []);
 
   useEffect(() => {
     axios.get('http://in3.dev/knygos/').then((res) => {
-      setBooks(res.data);
+      dispachBooks({ payload: res.data, type: 'get_from_server' });
     });
   }, []);
 
