@@ -41,7 +41,6 @@ function numbersReducer(state, action) {
       newState = state.map((o) =>
         o.number > 5000 ? { ...o, show: true } : { ...o, show: false }
       );
-      //   newState.filter((a) => parseInt(a.number) > 5000);
       break;
 
     case 'maziau':
