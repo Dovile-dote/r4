@@ -91,3 +91,7 @@ input {
   align-items: center;
   flex-direction: column;
 }
+
+span {
+  margin: 20px;
+}

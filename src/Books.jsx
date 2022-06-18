@@ -1,5 +1,5 @@
 import './App.css';
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import axios from 'axios';
 import booksReducer from './Reducer/booksReducer';
 import typeReducer from './Reducer/typeReducer';
@@ -8,6 +8,7 @@ function App() {
   //   const [books, setBooks] = useState([]);
   const [books, dispachBooks] = useReducer(booksReducer, []);
   const [type, dispachType] = useReducer(typeReducer, []);
+  // const [reload, setReload] = useState(1);
 
   // useEffect(() => {
   //   axios.get('http://in3.dev/knygos/').then((res) => {
@@ -103,6 +104,9 @@ function App() {
             <button onClick={daugiau}> daugiau nei 13 eu</button>
             <button onClick={reset}>visos knygos</button>
             <button onClick={reload}>reload</button>
+            {/* <button onClick={setReload((r) => (r === 1 ? (r = 0) : (r = 1)))}>
+              reload
+            </button> */}
           </div>
         </div>
       </header>
